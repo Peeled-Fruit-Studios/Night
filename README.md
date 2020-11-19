@@ -1,6 +1,6 @@
 # Night
 
-![A Logo](NightLogo.png)
+![A Logo](docs/NightLogo.png)
 
 Night is a kernel developed by PFS(Peeled Fruit Studios)
 
