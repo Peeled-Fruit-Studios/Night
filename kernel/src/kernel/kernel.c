@@ -1,8 +1,7 @@
-/* bkerndev - Bran's Kernel Development Tutorial
-*  By:   Brandon F. (friesenb@gmail.com)
-*  Desc: Main.c: C code entry.
-*
-*  Notes: No warranty expressed or implied. Use at own risk. */
+/* kernel/kernel.c - Kernel entry point.
+*  Copyright 2020 Peeled Fruit Studios and Others. All Rights Reserved.
+*  See LICENSE for more information */
+
 #include <system.h>
 
 void main()
@@ -19,10 +18,7 @@ void main()
 
     __asm__ __volatile__ ("sti");
 
-    puts("Hello World!\n");
-
-//    i = 10 / 0;
-//    putch(i);
+    puts("Night Kernel v0.5.0\n$ ");
 
     for (;;);
 }

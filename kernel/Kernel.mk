@@ -22,6 +22,5 @@ obj/%.o: src/%.s
 kernel_real: $(objs)
 	ld -T link.ld -no-PIE -melf_i386 -o kernel $(objs) libk.a
 
-
 kernel_clean:
 	rm -rf kernel obj libk.a
