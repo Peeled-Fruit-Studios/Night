@@ -1,14 +1,11 @@
-# Night
+<p align="center">
+  ![A Logo](docs/NightLogo.png)
+  <h1> Night </h1>
+</p>
 
-![A Logo](docs/NightLogo.png)
+Night is a Monolithic kernel developed by PFS(Peeled Fruit Studios)
 
-Night is a kernel developed by PFS(Peeled Fruit Studios)
-
-It is somewhat Unix compliant but not fully.
-
-Is is not linux nor is it posix compliant.'
-
-Think of it as a mix between linux and windows.
+It is somewhat Unix compliant and a 100% Awesome 💯 🎉.
 
 # Contributing
 
