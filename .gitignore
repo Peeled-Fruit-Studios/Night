@@ -3,7 +3,10 @@
 
 # Build Dir
 
-obj
+kernel/obj
+
+lib/libk/obj
+
 
 # Libraries
 *.lib
@@ -19,3 +22,6 @@ obj
 *.exe
 *.out
 *.app
+
+# Custom Build Script (for local testing)
+build.sh

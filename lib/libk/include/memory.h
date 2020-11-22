@@ -8,6 +8,6 @@ u8 inb(u16 _port);
 size_t strlen(const char *str);
 u16 *memsetw(u16 *dest, u16 val, size_t count);
 void *memset(void *dest, char val, size_t count);
-void *memcpy(void *dest, const void *src, size_t count)
+void *memcpy(void *dest, const void *src, size_t count);
 
 #endif

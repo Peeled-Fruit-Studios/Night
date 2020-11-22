@@ -10,7 +10,7 @@ void main()
 
     gdt_install();
     idt_install();
-    isrs_install();
+    isr_install();
     irq_install();
     init_video();
     timer_install();

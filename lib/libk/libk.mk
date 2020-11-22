@@ -1,4 +1,4 @@
-CFLAGS = -fno-PIC -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin
+CFLAGS = -fno-PIC -m32 -Wall -O -fstrength-reduce -fomit-frame-pointer -finline-functions -nostdinc -fno-builtin -nostdlib
 CFLAGS += -isystem include
 
 objs = obj/memory.o

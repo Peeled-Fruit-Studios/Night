@@ -4,7 +4,7 @@ objs = obj/kernel/kernel.o \
        obj/cpu/gdt.o \
        obj/cpu/idt.o \
        obj/cpu/irq.o \
-       obj/cpu/isrs.o \
+       obj/cpu/isr.o \
        obj/drivers/timer.o \
        obj/drivers/kb.o \
        obj/drivers/scrn.o \
