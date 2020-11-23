@@ -1,6 +1,8 @@
 #ifndef NIGHT_ISR_H
 #define NIGHT_ISR_H
 
+#include <cpu/regs.h>
+
 extern void _isr0();
 extern void _isr1();
 extern void _isr2();
@@ -33,14 +35,6 @@ extern void _isr28();
 extern void _isr29();
 extern void _isr30();
 extern void _isr31();
-
-struct regs
-{
-  unsigned int gs, fs, es, ds;
-  unsigned int edi, esi, ebp, esp, ebx, edx, ecx, eax;
-  unsigned int int_no, err_code;
-  unsigned int eip, cs, eflags, useresp, ss;    
-};
 
 void isr_install();
 

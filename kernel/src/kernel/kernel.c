@@ -1,24 +1,33 @@
 /* kernel/kernel.c - Kernel entry point.
-*  Copyright 2020 Peeled Fruit Studios and Others. All Rights Reserved.
-*  See LICENSE for more information */
+ *  Copyright 2020 Peeled Fruit Studios and Others. All Rights Reserved.
+ *  See LICENSE for more information */
 
-#include <system.h>
+#include <kernel.h>
 
-void main()
-{
-    int i;
+void main() {
+  set_color(VGA_COLOR_BLACK, VGA_COLOR_WHITE);
+  init_video();
+  puts("Night Kernel v0.5.1\nInitializing...\n");
+  puts("Setting up Global Descriptor Tables...\n");
+  gdt_install();
+  puts("Setting up Interrupts & Drivers...\n");
+  idt_install();
+  isr_install();
+  irq_install();
+  puts("Setting up System Clock...\n");
+  timer_install();
+  puts("Setting up Keyboard...\n");
+  keyboard_install();
+  puts("Complete!\n");
 
-    gdt_install();
-    idt_install();
-    isr_install();
-    irq_install();
-    init_video();
-    timer_install();
-    keyboard_install();
+  __asm__ __volatile__("sti");
 
-    __asm__ __volatile__ ("sti");
+  sleep(4);
+  set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
+  cls();
 
-    puts("Night Kernel v0.5.0\n$ ");
+  puts("$ ");
 
-    for (;;);
+  for (;;)
+    ;
 }
