@@ -8,6 +8,7 @@ objs = obj/kernel/kernel.o \
        obj/drivers/timer.o \
        obj/drivers/kb.o \
        obj/drivers/scrn.o \
+       obj/fs/fs.o \
        obj/kernel/start.o
 
 obj/%.o: src/%.c

@@ -7,7 +7,6 @@ kernel/obj
 
 lib/libk/obj
 
-
 # Libraries
 *.lib
 *.a
@@ -25,3 +24,7 @@ lib/libk/obj
 
 # Custom Build Script (for local testing)
 build.sh
+
+# Intrid Image and Intrid builder Binary
+tools/intrid
+tools/start.img
