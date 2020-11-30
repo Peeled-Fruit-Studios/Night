@@ -27,7 +27,7 @@ jobs:
       - name: Setup
         run: |
           cd ..
-          pip3 install ninja
+          sudo apt-get install ninja-build
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
           unzip latest
           cd Night
