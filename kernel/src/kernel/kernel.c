@@ -1,11 +1,12 @@
-/* kernel/kernel.c - Kernel entry point.
+/*  kernel/kernel.c - Kernel entry point.
  *  Copyright 2020 Peeled Fruit Studios and Others. All Rights Reserved.
  *  See LICENSE for more information */
 
 #include <kernel.h>
+#include <libk/panic.h>
 
 void main() {
-  set_color(VGA_COLOR_BLACK, VGA_COLOR_WHITE);
+  set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
   puts("Night Kernel v0.5.1\nInitializing...\n");
   puts("Setting up Global Descriptor Tables...\n");
@@ -18,7 +19,7 @@ void main() {
   timer_install();
   puts("Setting up Keyboard...\n");
   keyboard_install();
-  puts("Complete!\n");
+  panic("Unown Exception");
 
   __asm__ __volatile__("sti");
 
