@@ -29,6 +29,7 @@ jobs:
           pip3 install ninja
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
           sudo apt-get install grub-pc-bin xorriso
+          ls
           tar -xvf *.tar.gz
           cd Night
       - name: Build
