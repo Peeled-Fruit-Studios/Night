@@ -1,7 +1,7 @@
 #ifndef NIGHT_FS_H
 #define NIGHT_FS_H
 
-#include <types.h>
+#include <libk/types.h>
 
 #define FS_FILE 0x1
 #define FS_DIR 0x2

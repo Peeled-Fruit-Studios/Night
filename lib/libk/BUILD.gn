@@ -1,0 +1,9 @@
+static_library("libk") {
+  sources = [
+    "src/memory.c",
+    "src/panic.c",
+    "src/string.c",
+  ]
+  configs = ["//:krnl"]
+  include_dirs = ["../include/libk", "//kernel/include"]
+}

@@ -1,14 +1,18 @@
 #ifndef NIGHT_MAIN_H
 #define NIGHT_MAIN_H
 
-// Including Drivers
+// Drivers
 #include <drivers/kb.h>
 #include <drivers/scrn.h>
 #include <drivers/timer.h>
 
-// Including CPU Startup Code
+// CPU Startup Code
 #include <cpu/irq.h>
 #include <cpu/isr.h>
 #include <cpu/tables.h>
+
+// Filesystems
+#include <fs/fs.h>
+#include <fs/drivers/intrid.h>
 
 #endif

@@ -22,9 +22,10 @@ lib/libk/obj
 *.out
 *.app
 
-# Custom Build Script (for local testing)
-build.sh
-
-# Intrid Image and Intrid builder Binary
+# Intrid Leftovers
 tools/intrid
 tools/start.img
+
+# GN Build Stuff
+
+out

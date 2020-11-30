@@ -1,7 +1,7 @@
 #ifndef NIGHT_IRQ_H
 #define NIGHT_IRQ_H
 
-#include <memory.h>
+#include <libk/memory.h>
 #include <cpu/regs.h>
 
 extern void _irq0();

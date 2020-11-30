@@ -1,0 +1,7 @@
+config("krnl") {
+  cflags = ["-fno-PIC", "-m32", "-Wall", "-O", "-fstrength-reduce", "-fomit-frame-pointer", "-finline-functions", "-nostdinc", "-fno-builtin", "-nostdlib"]
+}
+
+group("all") {
+  deps = ["//kernel:kernel"]
+}
