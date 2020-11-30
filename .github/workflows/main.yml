@@ -29,8 +29,8 @@ jobs:
           cd ..
           pip3 install ninja
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
-          echo "\n\n"
-          file latest
+          unzip latest
+          cd Night
       - name: Build
         run: |
           ./../gn gen out
