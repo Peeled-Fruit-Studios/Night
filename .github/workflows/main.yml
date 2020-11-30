@@ -37,7 +37,7 @@ jobs:
           ninja -C out
       - name: Make Iso
         run: |
-          mkdir iso/boot/grub
+          mkdir -p iso/boot/grub
           touch iso/boot/grub/grub.cfg
           mv out/kernel iso/boot/krnl
           grub-mkrescue -o Night.iso iso
