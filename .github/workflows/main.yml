@@ -26,10 +26,11 @@ jobs:
       - uses: actions/checkout@v2
       - name: Setup
         run: |
+          cd ..
           pip3 install ninja
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
           echo "\n\n"
-          ls
+          file latest
       - name: Build
         run: |
           ./../gn gen out
