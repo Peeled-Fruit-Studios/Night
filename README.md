@@ -1,4 +1,4 @@
-![A Logo](docs/NightLogo.png)
+![A Logo](docs/pics/NightLogo.png)
 
 <p align="center">
   <h1> Night </h1>
@@ -12,7 +12,7 @@ If you have any questions, cheack out the docs folder or the wiki!
 
 ## Building
 
-See the docs folder for help.
+See the [Building.md](docs/BUILDING.md)
 
 ## Contributing
 

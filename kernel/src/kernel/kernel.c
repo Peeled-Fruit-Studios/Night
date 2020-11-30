@@ -5,7 +5,9 @@
 #include <kernel.h>
 #include <libk/panic.h>
 
-void main() {
+#pragma GCC diagnostic ignored "-Wpointer-sign"
+
+void kmain() {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
   puts("Night Kernel v0.5.1\nInitializing...\n");

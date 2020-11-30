@@ -19,8 +19,8 @@ _start:
 
 
 stublet:
-    extern main
-    call main
+    extern kmain
+    call kmain
     jmp $
 
 

@@ -2,6 +2,9 @@
 *  Copyright (c) 2020 Peeled Fruit Studios and Others. All Rights Reserved.
 *  See LICENSE for more information */
 #include <cpu/isr.h>
+#include <libk/panic.h>
+
+#pragma GCC diagnostic ignored "-Wpointer-sign"
 
 /* Very Annoying and Repetitive Function. Thought there was another way but
  * sadly there isn't :-( */

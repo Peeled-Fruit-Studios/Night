@@ -1,4 +1,19 @@
+declare_args() {
+  is_debug = true
+  is_release = false
+  NIGHT_KERNEL_VERSION="0.5.2"
+}
+
 config("krnl") {
+  print("Building Night Kernel v$NIGHT_KERNEL_VERSION")
+  if(is_release) {
+    print("Info - Using Release Configuration")
+    cflags_c = ["-O3", "-s"]
+  } else {
+    print("Info - Using Debug Configuration")
+    cflags_c = ["-g"]
+    defines = ["DEBUG"]
+  }
   cflags = ["-fno-PIC", "-m32", "-Wall", "-O", "-fstrength-reduce", "-fomit-frame-pointer", "-finline-functions", "-nostdinc", "-fno-builtin", "-nostdlib"]
 }
 

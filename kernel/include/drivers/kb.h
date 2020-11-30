@@ -3,6 +3,7 @@
 
 #include <libk/memory.h>
 #include <cpu/irq.h>
+#include <drivers/scrn.h>
 
 extern void keyboard_install();
 

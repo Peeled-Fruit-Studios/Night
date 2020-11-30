@@ -40,7 +40,7 @@ jobs:
           mkdir -p iso/boot/grub
           touch iso/boot/grub/grub.cfg
           mv out/kernel iso/boot/krnl
-          grub-mkrescue -o Night.iso iso
+          grub-mkrescue -p /iso -o Night.iso multiboot sh fat
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.1.4
         with:

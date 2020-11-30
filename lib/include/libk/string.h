@@ -6,5 +6,6 @@
 
 void sprintf(char* buf, char* fmt, ...);
 size_t strlen(const char* s);
+char* strcat(char* stra, char* strb);
 
 #endif

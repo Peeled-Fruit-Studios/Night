@@ -1,2 +1,4 @@
+# Uncomment if you want to use clang instead of gcc
+# set_default_toolchain("//build/toolchains:clang")
+
 set_default_toolchain("//build/toolchains:gcc")
-cflags_cc = ["-std=c++11"]

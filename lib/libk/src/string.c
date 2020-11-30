@@ -1,5 +1,8 @@
 #include <string.h>
 
+
+char arra[200];
+
 size_t strlen(const char *str) {
   size_t retval;
   for (retval = 0; *str != '\0'; str++) retval++;
@@ -227,4 +230,18 @@ void sprintf(char *buf, char *fmt, ...) {
   va_start(ap, fmt);
   vsprintf(buf, fmt, ap);
   va_end(ap);
+}
+
+/* Not a real implentation of strcat, but it will have to do until I add kmalloc */
+char* strcat(char* stra, char* strb) {
+  int sz = strlen(stra) + strlen(strb);
+  for(int i = 0; i < sz; i++) {
+    if(i > strlen(stra)) {
+      arra[i] = strb[(i - strlen(stra))];
+    } else {
+      arra[i] = stra[i];
+    }
+  }
+  arra[sz] = '\0';
+  return arra;
 }

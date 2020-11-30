@@ -2,6 +2,7 @@
 #define NIGHT_ISR_H
 
 #include <cpu/regs.h>
+#include <cpu/tables.h>
 
 extern void _isr0();
 extern void _isr1();

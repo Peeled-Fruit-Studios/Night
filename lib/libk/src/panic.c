@@ -2,7 +2,7 @@
 #include <string.h>
 #include <types.h>
 
-// I hate to do it, but if I don't, the terminal will be filled with junk
+/* I hate to do it, but if I don't, the terminal will be filled with junk */
 
 #pragma GCC diagnostic ignored "-Wint-conversion"
 #pragma GCC diagnostic ignored "-Wpointer-sign"
@@ -12,6 +12,7 @@ static void print_buf() {
     putch("-");
   }
 }
+
 /* I know the code in this function dosen't look pretty, but it's the best that I can muster for now. */
 
 void kpanic(char* message) {
