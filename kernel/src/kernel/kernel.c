@@ -5,10 +5,19 @@
 #include <kernel.h>
 #include <libk/panic.h>
 
+char term_buf[100];
+
+void terminal() {
+  puts("Night Kernel (0.5.2) (Official Build) (x86_32)\n");
+  puts("Copyright (c) 2020 Peeled Fruit Studios. All Rights Reserved.\n");
+  puts("\n$ ");
+  tab_stop();
+}
+
 void main() {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
-  puts("Night Kernel v0.5.2\nInitializing...\n");
+  puts("Night Kernel v0.5.2\n");
   puts("Setting up Global Descriptor Tables...\n");
   gdt_install();
   puts("Setting up Interrupts & Drivers...\n");
@@ -22,12 +31,12 @@ void main() {
 
   __asm__ __volatile__("sti");
 
+  lock_vga();
   sleep(4);
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   cls();
-
-  puts("$ ");
-
+  unlock_vga();
+  terminal();
   for (;;)
     ;
 }

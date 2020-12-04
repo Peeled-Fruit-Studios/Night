@@ -6,4 +6,6 @@
 
 extern void keyboard_install();
 
+char get_char();
+
 #endif
