@@ -8,7 +8,7 @@
 void main() {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
-  puts("Night Kernel v0.5.1\nInitializing...\n");
+  puts("Night Kernel v0.5.2\nInitializing...\n");
   puts("Setting up Global Descriptor Tables...\n");
   gdt_install();
   puts("Setting up Interrupts & Drivers...\n");
@@ -19,7 +19,6 @@ void main() {
   timer_install();
   puts("Setting up Keyboard...\n");
   keyboard_install();
-  kpanic("Unown Exception");
 
   __asm__ __volatile__("sti");
 

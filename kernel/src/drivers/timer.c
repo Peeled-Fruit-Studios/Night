@@ -1,20 +1,25 @@
-
 /* drivers/timer.c - PIT Driver for Night Kernel.
  *  Copyright (c) 2020 Peeled Fruit Studios and Others. All Rights Reserved.
  *  See LICENSE for more information */
 #include <drivers/timer.h>
+#include <drivers/scrn.h>
+#include <libk/string.h>
 
 /* This will keep track of how many ticks that the system
  *  has been running for */
-int timer_ticks = 0;
+volatile int timer_ticks = 0;
 
-unsigned int secs;
+volatile unsigned int secs = 0;
+
+char buf[100];
 
 void timer_handler(struct regs *r) {
   /* Increment our 'tick count' */
   timer_ticks++;
 
-  if (timer_ticks % 18 == 0) { secs++; }
+  if (timer_ticks % 18 == 0) {
+    secs++;
+  }
 }
 
 /* This will continuously loop until the given time has
@@ -29,7 +34,7 @@ void sleepP(int ticks) {
 unsigned int getUptime() { return secs; }
 
 void sleep(unsigned int sec) {
-  unsigned int to_wait = secs + sec;
+  volatile unsigned int to_wait = secs + sec;
   while (1) {
     if (to_wait == secs) { return; }
   }
