@@ -16,17 +16,13 @@ static void print_buf() {
 
 void kpanic(char* message) {
   cls();
-  print_buf();
-  puts("| Unfortunately, An Unrecoverable Error has occured :-(");
-  putch("|");
-  puts("| Reason: ");
+  puts("Unfortunately an error has occured. :-(\n");
+  puts("Reason: ");
   set_color(VGA_COLOR_RED, VGA_COLOR_BLACK);
   puts(message);
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
-  size_t strize = strlen(message) + 9;
-  for(size_t i = strize; i < 79; i++) {
-    putch(" ");
-  }
-  putch("|");
-  print_buf();
+  puts("\n\nIf this continues, file an issue on Github.\nUrl:");
+  set_color(VGA_COLOR_BLUE, VGA_COLOR_BLACK);
+  puts(" https://github.com/Peeled-Fruit-Studios/Night\n");
+  set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);  
 }

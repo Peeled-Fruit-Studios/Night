@@ -26,4 +26,10 @@ void putch(unsigned char c);
 void cls();
 void set_color(unsigned char forecolor, unsigned char backcolor);
 
+void lock_vga();
+
+void unlock_vga();
+
+void tab_stop();
+
 #endif

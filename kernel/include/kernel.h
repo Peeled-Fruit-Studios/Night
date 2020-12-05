@@ -11,6 +11,10 @@
 #include <cpu/isr.h>
 #include <cpu/tables.h>
 
+// Memory Management
+#include <mm/heap.h>
+#include <mm/paging.h>
+
 // Filesystems
 #include <fs/fs.h>
 #include <fs/drivers/intrid.h>

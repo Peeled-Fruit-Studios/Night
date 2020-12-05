@@ -38,6 +38,11 @@ unsigned char kbdus[128] = {
   0, /* All other keys are undefined */
 };
 
+/* If you have noticed a lot of volatile keywords in my code, it is
+*  because the compiler that I am using (gcc) has a tendancy to mess up *  *  *  variables whith optimization. Volatile prevents that from happining*/
+
+volatile char cur_char; 
+
 /* Handles the keyboard interrupt */
 void keyboard_handler(struct regs *r) {
   unsigned char scancode;
@@ -51,7 +56,20 @@ void keyboard_handler(struct regs *r) {
     /* Will be implemented later hopefully */
   } else {   
     putch(kbdus[scancode]);
+    cur_char = kbdus[scancode];
   }
+}
+/* I disabled interrupts because a rare condition happens
+*  where an interrupt occurs in the middle of getting the current
+*  character. This may seem small, but when testing in qemu, it brought
+*  down the whole entire system! */
+
+char get_char() {
+  volatile char to_ret; // See cur_char
+  asm volatile ("cli");
+  to_ret = cur_char;
+  asm volatile ("sti");
+  return to_ret;
 }
 
 /* Installs the keyboard handler into IRQ1 */

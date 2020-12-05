@@ -9,6 +9,9 @@ unsigned short *textmemptr;
 int attrib = 0x0F;
 int csr_x = 0, csr_y = 0;
 
+int vga_locked = 0;
+int tstop;
+
 /* Scrolls the screen */
 void scroll(void) {
   unsigned blank, temp;
@@ -38,6 +41,19 @@ void move_csr(void) {
   outb(0x3D5, temp);
 }
 
+// Prevents printing to screen
+void lock_vga() {
+  vga_locked = 1;
+}
+
+void unlock_vga() {
+  vga_locked = 0;
+}
+
+void tab_stop() {
+  tstop = textmemptr + (csr_y * 80 + csr_x);
+}
+
 /* Clears the screen */
 void cls() {
   unsigned blank;
@@ -60,12 +76,19 @@ void cls() {
 
 /* Puts a single character on the screen */
 void putch(unsigned char c) {
-  unsigned short *where;
+  if(vga_locked) {
+    return;
+  }
+  unsigned short *loc;
   unsigned att = attrib << 8;
 
   /* Handle a backspace, by moving the cursor back one space */
   if (c == 0x08) {
+    loc = textmemptr + (csr_y * 80 + csr_x);
+    if(loc <= tstop) { return; }
     if (csr_x != 0) csr_x--;
+    loc = textmemptr + (csr_y * 80 + csr_x);
+    *loc = ' ' | att;
   }
   /* Handles a tab by incrementing the cursor's x, but only
    *  to a point that will make it divisible by 8 */
@@ -89,8 +112,8 @@ void putch(unsigned char c) {
    *  in a linear chunk of memory can be represented by:
    *  Index = [(y * width) + x] */
   else if (c >= ' ') {
-    where = textmemptr + (csr_y * 80 + csr_x);
-    *where = c | att; /* Character AND attributes: color */
+    loc = textmemptr + (csr_y * 80 + csr_x);
+    *loc = c | att; /* Character AND attributes: color */
     csr_x++;
   }
 
