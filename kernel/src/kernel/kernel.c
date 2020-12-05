@@ -8,21 +8,16 @@
 char term_buf[100];
 
 void terminal() {
-  puts("Night Kernel (0.5.2) (Official Build) (x86_32)\n");
+  puts("Night Kernel (0.5.3) (Official Build) (x86_32)\n");
   puts("Copyright (c) 2020 Peeled Fruit Studios. All Rights Reserved.\n");
   puts("\n$ ");
   tab_stop();
 }
 
-void malloc_test() {
-  u32* k = (u32*)0xA0000000;
-  u32 f = *k;
-}
-
 void main() {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
-  puts("Night Kernel v0.5.2\n");
+  puts("Night Kernel v0.5.3\n");
   puts("Setting up Global Descriptor Tables...\n");
   gdt_install();
   puts("Setting up Interrupts & Drivers...\n");
@@ -35,13 +30,10 @@ void main() {
   keyboard_install();
   puts("Initializing Paging\n");
   init_paging();
-  puts("Testing Paging\n");
-  malloc_test();
 
 
   __asm__ __volatile__("sti");
   lock_vga();
-/*
   sleep(4);
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   cls();
@@ -49,5 +41,4 @@ void main() {
   terminal();
   for (;;)
     ;
-*/
 }
