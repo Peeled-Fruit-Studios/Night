@@ -1,10 +1,10 @@
-<h1 align="center"> Build Instructions for the Night Kernel </h1>
+<h1 align="center"> Building the Night Kernel </h1>
 
-Before we get started, I have one thing to say...
+Before we get started, If you are windows you can't build the kernel.
 
-If you are on windows, you are unable to build the kernel due to the fact that a elf-supporting compiler is required
+I am still working on adding windows support and I promise it will be here soon!!
 
-Otherwise proceed on to the rest of the instructions
+Till then, you can get prebuilt iso images in the actions tab!
 
 ## Using GN
 
@@ -59,6 +59,12 @@ To build a certain target (like libk)
 ninja -C out <name of target>
 ````
 
-The resulting kernel binary is out/kernel
+The resulting kernel binary is multiboot capable and can be booted with grub.
 
-**Note: I am still getting around to adding Bootable iso support**
+It is in the out directory with the name kernel
+
+As for building the ISO, that is up to you, the builder to make an image.
+
+If you are clueless and don't know how to build an ISO, [Click Here](https://wiki.osdev.org/Bootable_El-Torito_CD_with_GRUB_Legacy)
+
+**Note: Better ISO support is just around the corner and should be added soon.**
