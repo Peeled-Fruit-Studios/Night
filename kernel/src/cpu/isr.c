@@ -2,7 +2,6 @@
 *  Copyright (c) 2020 Peeled Fruit Studios and Others. All Rights Reserved.
 *  See LICENSE for more information */
 #include <cpu/isr.h>
-#include <mm/paging.h>
 
 /* Very Annoying and Repetitive Function. Thought there was another way but
  * sadly there isn't :-( */
@@ -84,11 +83,6 @@ unsigned char* exception_messages[] = {
 
 void fault_handler(struct regs* r) {
   if (r->int_no < 32) {
-    if(r->int_no == 14) {
-      page_fault(*r);
-      asm volatile ("cli");
-      for(;;);
-    }
     puts(exception_messages[r->int_no]);
     puts(" Exception. System Halted!\n");
     for (;;);

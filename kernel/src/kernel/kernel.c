@@ -14,7 +14,7 @@ void terminal() {
   tab_stop();
 }
 
-void main() {
+void kmain(multiboot* mb) {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
   puts("Night Kernel v0.5.3\n");
@@ -28,8 +28,8 @@ void main() {
   timer_install();
   puts("Setting up Keyboard...\n");
   keyboard_install();
-  puts("Initializing Paging\n");
-  init_paging();
+  puts("Initializing Memory\n");
+  init_memory((u32)mb->mem_upper);
 
 
   __asm__ __volatile__("sti");

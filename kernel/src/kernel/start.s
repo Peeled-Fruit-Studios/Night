@@ -1,7 +1,8 @@
 [BITS 32]
 global _start
 _start:
-    mov esp, _sys_stack     
+    mov esp, _sys_stack  
+    push ebx   
     jmp stublet
 
 [section .multiboot]
@@ -19,8 +20,8 @@ _start:
 
 
 stublet:
-    extern main
-    call main
+    extern kmain
+    call kmain
     jmp $
 
 

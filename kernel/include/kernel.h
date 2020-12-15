@@ -12,11 +12,14 @@
 #include <cpu/tables.h>
 
 // Memory Management
-#include <mm/heap.h>
-#include <mm/paging.h>
+#include <mm/alloc.h>
+#include <mm/vmm.h>
 
 // Filesystems
 #include <fs/fs.h>
 #include <fs/drivers/intrid.h>
+
+// Multiboot
+#include <multiboot.h>
 
 #endif

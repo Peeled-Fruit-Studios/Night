@@ -13,8 +13,8 @@ executable("kernel") {
     "src/drivers/timer.c",
     "src/drivers/kb.c",
     "src/drivers/scrn.c",
-    "src/mm/heap.c",
-    "src/mm/paging.c",
+    "src/mm/alloc.c",
+    "src/mm/vmm.c",
     "src/kernel/start.s"
   ]
   configs = ["//:krnl"]
