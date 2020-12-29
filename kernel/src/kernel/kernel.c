@@ -4,7 +4,11 @@
 
 #include <kernel.h>
 #include <libk/panic.h>
+#include <fs/fs.h>
 
+extern fs_node* root;
+
+/*
 char term_buf[100];
 
 void terminal() {
@@ -13,6 +17,20 @@ void terminal() {
   puts("\n$ ");
   tab_stop();
 }
+*/
+
+void fs_test() {
+  puts("Opening file S:/kernel.conf\n");
+  fs_node* fil = root->contents->contents;
+  puts(fil->name);
+  putch('\n');
+  char* buf = kmalloc(fil->sz);
+  fs_read(fil, fil->sz, buf);
+  puts(buf);
+  fs_node* fi = get_file("S:/kernel.conf");
+  puts(fi->name);
+}
+
 
 void kmain(multiboot* mb) {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
@@ -30,15 +48,25 @@ void kmain(multiboot* mb) {
   keyboard_install();
   puts("Initializing Memory\n");
   init_memory((u32)mb->mem_upper);
-
-
+  puts("Initializing Filesystem\n");
+  init_fs();
+#ifdef USE_INITRD
+  u32 loc = *((u32*)mb->mods_addr);
+  u32 end = *((u32*)mb->mods_addr + 4);
+  u32 sz = end - loc;
+  printf("Mod at addr 0x%x with size of %d\n", loc, sz);
+  fs_mount(init_tarfs((void*)loc));
+#endif
   __asm__ __volatile__("sti");
   lock_vga();
   sleep(4);
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   cls();
   unlock_vga();
+  fs_test();
+  /*
   terminal();
+  */
   for (;;)
     ;
 }

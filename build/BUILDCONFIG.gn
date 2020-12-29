@@ -1,2 +1,8 @@
-set_default_toolchain("//build/toolchains:gcc")
+import("//build/imports.gni")
+if(use_clang) {
+  set_default_toolchain("//build/toolchains:clang")
+} else {
+  set_default_toolchain("//build/toolchains:gcc")
+  cflags_c = ["-std=c89"]
+}
 cflags_cc = ["-std=c++11"]

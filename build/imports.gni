@@ -1,0 +1,11 @@
+declare_args() {
+  is_debug = true
+  # Only Enable if you are running the kernel on a unsupported filesystem
+  # See docs/BUILDING.md for more
+  use_initrd = true
+  # Enable only if you want to compile with clang, which I wouldn't
+  # Reccomend as for it has not been tested
+  use_clang = true
+  # Don't Modify!
+  kernel_version = "0.7.2"
+}

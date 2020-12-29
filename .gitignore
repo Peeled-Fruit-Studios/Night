@@ -1,12 +1,6 @@
 # Object files
 *.o
 
-# Build Dir
-
-kernel/obj
-
-lib/libk/obj
-
 # Libraries
 *.lib
 *.a
@@ -22,10 +16,14 @@ lib/libk/obj
 *.out
 *.app
 
-# Intrid Leftovers
-tools/intrid
-tools/start.img
+# GN Build Dirs
 
-# GN Build Stuff
+# Standard Build
+out 
 
-out
+# Release Build
+rel 
+
+# Debug Build
+deb 
+

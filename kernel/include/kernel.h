@@ -17,7 +17,8 @@
 
 // Filesystems
 #include <fs/fs.h>
-#include <fs/drivers/intrid.h>
+#include <fs/tar/tar.h>
+
 
 // Multiboot
 #include <multiboot.h>

@@ -1,56 +1,86 @@
-/* fs/fs.c - Filesystem for the Night Kernel.
-*  Copyright (c) 2020 Peeled Fruit Studios and Others. All Rights Reserved.
-*  See LICENSE for more information. */
-
 #include <fs/fs.h>
+#include <mm/alloc.h>
+#include <libk/string.h>
+#include <libk/types.h>
 
-fs_node* root = 0;
+fs_node* root;
 
-size_t read(fs_node* nd, size_t length, size_t offset, u8* buffer) {
-  if (nd->read != 0) {
-    return nd->read(nd, length, offset, buffer);
-  } else {
+int fs_read(fs_node* nd, size_t len, u8* buf) {
+  if(IS_DIRECTORY(nd) | !nd->read) {
     return 0;
+  } else {
+    return nd->read(len, buf, nd);
   }
 }
 
-size_t write(fs_node* nd, size_t length, size_t offset, u8* buffer) {
-  if (nd->write != 0) {
-    return nd->write(nd, length, offset, buffer);
-  } else {
+int fs_write(fs_node* nd, size_t len, u8* buf) {
+  if(IS_DIRECTORY(nd) | IS_READONLY(nd) | !nd->read) {
     return 0;
+  } else {
+    return nd->read(len, buf, nd);
   }
 }
 
-
-void open(fs_node* nd) {
-  if (nd->open != 0) {
-    nd->open(nd);
+void add_dir(fs_node* dir, fs_node* file) {
+  fs_node* holder;
+  if(dir->contents == NULL) {
+    dir->contents = file;
+  } else if (dir->contents->nxt == NULL) {
+    dir->contents->nxt = file;
   } else {
-    return;
+    holder = dir->contents->nxt;
+    while(holder->nxt != NULL) {
+      holder = holder->nxt;
+    }
+    holder->nxt = holder->nxt;
   }
+  dir->sz++;
 }
 
-void close(fs_node* nd) {
-  if (nd->close != 0) {
-    nd->close(nd);
-  } else {
-    return;
+fs_node* get_file(char* path) {
+  fs_node* rot = root->contents;
+  printf("Path without mods %s\n", path);
+  printf("Path with messing %s\n", strdup(path));
+  for(int f = 0; f < 10; f++);
+  char* tk;
+  tk = strtok(path, "/");
+  while(tk) {
+    if(memcmp(rot->name, tk, strlen(tk)) == 0) {
+      tk = strtok(NULL, "/");
+      if(tk) {
+        rot = rot->contents;
+        continue;
+      } else {
+        // kfree(inf);
+        return rot;
+      }
+    }
+    if(rot->nxt) {
+      rot = rot->nxt;
+    } else {
+      // kfree(inf);
+      return NULL;
+    }
   }
+  // kfree(inf);
+  return NULL;
 }
 
-dir* read_dir(fs_node* nd) {
-  if ((nd->flags & 0xFF) == FS_DIR && nd->read_dir != 0) {
-    return nd->read_dir(nd);
-  } else {
-    return NULL;
-  }
+fs_node* make_file(char* name, u8 flags, size_t sz, fs_node* contents, fs_node* nxt) {
+  fs_node* trt = kmalloc(sizeof(fs_node));
+  trt->name = name;
+  trt->flags = flags;
+  trt->sz = sz;
+  trt->contents = contents;
+  trt->nxt = nxt;
+  return trt;
 }
 
-fs_node* find_dir(fs_node* nd, char* name) {
-  if ((nd->flags & 0xFF) == FS_DIR && nd->find_dir != 0) {
-    return nd->find_dir(nd, name);
-  } else {
-    return NULL;
-  }
+void fs_mount(fs_node* nd) {
+  add_dir(root, nd);
+}
+
+void init_fs() {
+  root = make_file("rt", 0, 0, NULL, NULL);
+  root->flags |= 1 << 3;
 }

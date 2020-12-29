@@ -82,6 +82,9 @@ unsigned char* exception_messages[] = {
 };
 
 void fault_handler(struct regs* r) {
+  if(r->int_no == 14) {
+    pg_handle(r);
+  }
   if (r->int_no < 32) {
     puts(exception_messages[r->int_no]);
     puts(" Exception. System Halted!\n");

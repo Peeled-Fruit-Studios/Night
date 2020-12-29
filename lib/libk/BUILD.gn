@@ -3,7 +3,8 @@ static_library("libk") {
     "src/memory.c",
     "src/panic.c",
     "src/string.c",
+    "src/printf.c",
   ]
-  configs = ["//:krnl"]
+  configs = ["//:lib"]
   include_dirs = ["../include/libk", "//kernel/include"]
 }

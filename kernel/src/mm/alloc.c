@@ -1,5 +1,6 @@
 #include <mm/alloc.h>
 #include <mm/vmm.h>
+#include <libk/memory.h>
 
 void *ksbrk(int n) {
   struct kmalloc_header *chunk;
@@ -117,4 +118,16 @@ void kfree(void *v_addr) {
   while ((other = (struct kmalloc_header *)((char *)chunk + chunk->size)) &&
          other < (struct kmalloc_header *)kern_heap && other->used == 0)
     chunk->size += other->size;
+}
+
+
+void *krealloc(void* addr, size_t nz) {
+  if(nz == 0) {
+    return NULL;
+  } else {
+    void* naddr = kmalloc(nz);
+    memcpy(naddr, addr, nz);
+    kfree(addr);
+    return naddr;
+  }
 }

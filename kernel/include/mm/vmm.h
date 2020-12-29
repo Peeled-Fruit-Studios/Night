@@ -89,6 +89,8 @@ int pd_remove_page(char *v_addr);
 
 char *get_p_addr(char *v_addr);
 
+void vmm_map(char* phys, char* virt);
+
 #define KMALLOC_MINSIZE 16
 
 struct kmalloc_header {

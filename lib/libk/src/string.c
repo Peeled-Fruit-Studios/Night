@@ -1,9 +1,23 @@
+#include <memory.h>
+#include <mm/alloc.h>
 #include <string.h>
 
 size_t strlen(const char *str) {
   size_t retval;
   for (retval = 0; *str != '\0'; str++) retval++;
   return retval;
+}
+
+char *ssplit(char to_split, char *src, char *rem) {
+  for (int i = 0; i < strlen(src); i++) {
+    if (src[i] == to_split) {
+      rem = &src[i];
+      char *trt = kmalloc(sizeof(char) * i);
+      memcpy(src, trt, i);
+      return trt;
+    }
+  }
+  return NULL;
 }
 
 #define is_digit(c) ((c) >= '0' && (c) <= '9')
@@ -15,13 +29,13 @@ static int skip_atoi(const char **s) {
   return i;
 }
 
-#define ZEROPAD 1 /* pad with zero */
-#define SIGN 2 /* unsigned/signed long */
-#define PLUS 4 /* show plus */
-#define SPACE 8 /* space if plus */
-#define LEFT 16 /* left justified */
-#define SPECIAL 32 /* 0x */
-#define SMALL 64 /* use 'abcdef' instead of 'ABCDEF' */
+#define ZEROPAD 1
+#define SIGN 2
+#define PLUS 4
+#define SPACE 8
+#define LEFT 16
+#define SPECIAL 32
+#define SMALL 64
 
 #define do_div(n, base)                                                    \
   ({                                                                       \
@@ -85,12 +99,11 @@ int vsprintf(char *buf, const char *fmt, va_list args) {
   char *s;
   int *ip;
 
-  int flags; /* flags to number() */
+  int flags;
 
-  int field_width; /* width of output field */
-  int precision; /* min. # of digits for integers; max
-                    number of chars for from string */
-  int qualifier; /* 'h', 'l', or 'L' for integer fields */
+  int field_width;
+  int precision;
+  int qualifier;
 
   for (str = buf; *fmt; ++fmt) {
     if (*fmt != '%') {
@@ -98,10 +111,9 @@ int vsprintf(char *buf, const char *fmt, va_list args) {
       continue;
     }
 
-    /* process flags */
     flags = 0;
   repeat:
-    ++fmt; /* this also skips first '%' */
+    ++fmt;
     switch (*fmt) {
       case '-':
         flags |= LEFT;
@@ -120,12 +132,10 @@ int vsprintf(char *buf, const char *fmt, va_list args) {
         goto repeat;
     }
 
-    /* get field width */
     field_width = -1;
     if (is_digit(*fmt))
       field_width = skip_atoi(&fmt);
     else if (*fmt == '*') {
-      /* it's the next argument */
       field_width = va_arg(args, int);
       if (field_width < 0) {
         field_width = -field_width;
@@ -133,20 +143,17 @@ int vsprintf(char *buf, const char *fmt, va_list args) {
       }
     }
 
-    /* get the precision */
     precision = -1;
     if (*fmt == '.') {
       ++fmt;
       if (is_digit(*fmt))
         precision = skip_atoi(&fmt);
       else if (*fmt == '*') {
-        /* it's the next argument */
         precision = va_arg(args, int);
       }
       if (precision < 0) precision = 0;
     }
 
-    /* get the conversion qualifier */
     qualifier = -1;
     if (*fmt == 'h' || *fmt == 'l' || *fmt == 'L') {
       qualifier = *fmt;
@@ -227,4 +234,50 @@ void sprintf(char *buf, char *fmt, ...) {
   va_start(ap, fmt);
   vsprintf(buf, fmt, ap);
   va_end(ap);
+}
+
+char *strdup(char *str) {
+  volatile char *data = kmalloc(strlen(str));
+  memcpy(data, str, strlen(str));
+  return data;
+}
+
+char *strtok(char *str, const char *delim) {
+  static char *left = NULL;
+  if (str == NULL) str = left;
+  if (str == NULL) return NULL;
+
+  const char *p;
+  bool flag;
+  while (*str != 0) {
+    p = delim;
+    flag = false;
+    while (*p != 0) {
+      if (*p++ == *str) {
+        flag = true;
+        break;
+      }
+    }
+    if (!flag) break;
+    ++str;
+  }
+  char *s = str;
+  while (*s != 0) {
+    p = delim;
+    flag = false;
+    while (*p != 0) {
+      if (*p++ == *s) {
+        flag = true;
+        *s = 0;
+        break;
+      }
+    }
+    ++s;
+    if (flag) {
+      left = s;
+      return str;
+    }
+  }
+  left = NULL;
+  return str;
 }
