@@ -6,14 +6,15 @@
 *******************************************/
 
 #include <cpu/tables.h>
+#include <libk/types.h>
 
-struct gdt_entry gdt[3];
+struct gdt_entry gdt[5];
 struct gdt_ptr gp;
 
 extern void _gdt_flush();
 
 
-static void gdt_set_gate(int num, size_t base, size_t limit, u8 access, u8 gran) {
+void gdt_set_gate(int num, size_t base, size_t limit, u8 access, u8 gran) {
   
   gdt[num].base_low = (base & 0xFFFF);
   gdt[num].base_middle = (base >> 16) & 0xFF;
