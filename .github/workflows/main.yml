@@ -27,7 +27,7 @@ jobs:
       - name: Setup
         run: |
           cd ..
-          sudo apt-get install ninja-build nasm mtools
+          sudo apt-get install ninja-build nasm mtools genisoimage
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
           unzip latest
           cd Night
@@ -35,12 +35,26 @@ jobs:
         run: |
           ./../gn gen out
           ninja -C out
+      - name: Get GRUB Image
+        run: |
+          wget http://littleosbook.github.com/files/stage2_eltorito
+          mv stage2_eltorito iso/boot/grub/stage2_eltorito
       - name: Make Iso
         run: |
           mkdir -p iso/boot/grub
           touch iso/boot/grub/grub.cfg
           mv out/kernel iso/boot/krnl
-          grub-mkrescue -p iso -o Night.iso multiboot sh fat
+          genisoimage -R                              \
+                -b boot/grub/stage2_eltorito    \
+                -no-emul-boot                   \
+                -boot-load-size 4               \
+                -A os                           \
+                -input-charset utf8             \
+                -quiet                          \
+                -boot-info-table                \
+                -o Night.iso                       \
+                iso
+          
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.1.4
         with:
