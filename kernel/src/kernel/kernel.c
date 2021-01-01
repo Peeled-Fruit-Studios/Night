@@ -21,14 +21,12 @@ void terminal() {
 
 void fs_test() {
   puts("Opening file S:/kernel.conf\n");
-  fs_node* fil = root->contents->contents;
+  fs_node* fil = get_file("S:/kernel.conf");
   puts(fil->name);
   putch('\n');
   char* buf = kmalloc(fil->sz);
   fs_read(fil, fil->sz, buf);
   puts(buf);
-  fs_node* fi = get_file("S:/kernel.conf");
-  puts(fi->name);
 }
 
 

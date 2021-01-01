@@ -5,7 +5,7 @@ declare_args() {
   use_initrd = true
   # Enable only if you want to compile with clang, which I wouldn't
   # Reccomend as for it has not been tested
-  use_clang = true
+  use_clang = false
   # Don't Modify!
   kernel_version = "0.7.2"
 }

@@ -39,8 +39,6 @@ void add_dir(fs_node* dir, fs_node* file) {
 
 fs_node* get_file(char* path) {
   fs_node* rot = root->contents;
-  printf("Path without mods %s\n", path);
-  printf("Path with messing %s\n", strdup(path));
   for(int f = 0; f < 10; f++);
   char* tk;
   tk = strtok(path, "/");
