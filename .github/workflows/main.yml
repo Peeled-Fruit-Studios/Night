@@ -38,10 +38,10 @@ jobs:
       - name: Get GRUB Image
         run: |
           wget http://littleosbook.github.com/files/stage2_eltorito
+          mkdir -p iso/boot/grub
           mv stage2_eltorito iso/boot/grub/stage2_eltorito
       - name: Make Iso
         run: |
-          mkdir -p iso/boot/grub
           touch iso/boot/grub/grub.cfg
           mv out/kernel iso/boot/krnl
           genisoimage -R                              \
