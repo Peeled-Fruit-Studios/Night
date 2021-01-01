@@ -1,4 +1,4 @@
-# This is a basic workflow to help you get started with Actions
+# Github Actions Workflow for Night Kernel.
 
 name: CI
 
@@ -27,7 +27,7 @@ jobs:
       - name: Setup
         run: |
           cd ..
-          sudo apt-get install ninja-build nasm mtools genisoimage
+          sudo apt-get install ninja-build nasm mtools
           wget https://chrome-infra-packages.appspot.com/dl/gn/gn/linux-amd64/+/latest
           unzip latest
           cd Night
@@ -35,26 +35,13 @@ jobs:
         run: |
           ./../gn gen out
           ninja -C out
-      - name: Get GRUB Image
-        run: |
-          wget http://littleosbook.github.com/files/stage2_eltorito
-          mkdir -p iso/boot/grub
-          mv stage2_eltorito iso/boot/grub/stage2_eltorito
       - name: Make Iso
         run: |
-          touch iso/boot/grub/grub.cfg
+          mkdir -p iso/boot/grub
+          mv extra/grub.cfg iso/boot/grub/grub.cfg
           mv out/kernel iso/boot/krnl
-          genisoimage -R                              \
-                -b boot/grub/stage2_eltorito    \
-                -no-emul-boot                   \
-                -boot-load-size 4               \
-                -A os                           \
-                -input-charset utf8             \
-                -quiet                          \
-                -boot-info-table                \
-                -o Night.iso                       \
-                iso
-          
+          mv out/itd.tar iso/boot/start.tar
+          grub-mkrescue -o Night.iso iso
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2.1.4
         with:
