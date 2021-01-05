@@ -5,7 +5,7 @@ config("lib") {
   if(is_debug) {
     cflags += ["-g"]
   } else {
-    cflags += ["-O3", "-s"]
+    cflags += ["-O3", "-s", "-w"]
   }
 }
 
