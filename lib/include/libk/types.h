@@ -3,6 +3,7 @@
 
 typedef unsigned long size_t;
 typedef unsigned int u32;
+typedef u32 addr_t; // Helps provide clarification
 typedef unsigned short u16;
 typedef unsigned char u8;
 #define NULL ((void*)0)

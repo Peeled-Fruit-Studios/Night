@@ -45,7 +45,8 @@ void kmain(multiboot* mb) {
   puts("Setting up Keyboard...\n");
   keyboard_install();
   puts("Initializing Memory\n");
-  init_memory((u32)mb->mem_upper);
+  init_paging();
+  init_pmm(mb);
   puts("Initializing Filesystem\n");
   init_fs();
 #ifdef USE_INITRD

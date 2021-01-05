@@ -12,8 +12,8 @@
 #include <cpu/tables.h>
 
 // Memory Management
-#include <mm/alloc.h>
-#include <mm/vmm.h>
+#include <mm/paging.h>
+#include <mm/pmm.h>
 
 // Filesystems
 #include <fs/fs.h>

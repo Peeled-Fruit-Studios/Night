@@ -21,8 +21,8 @@ executable("kernel") {
     "src/drivers/timer.c",
     "src/drivers/kb.c",
     "src/drivers/scrn.c",
-    "src/mm/alloc.c",
-    "src/mm/vmm.c",
+    "src/mm/paging.c",
+    "src/mm/pmm.c",
     "src/fs/fs.c",
     "src/fs/tar/tar.c",
     "src/kernel/start.s"
@@ -30,7 +30,7 @@ executable("kernel") {
   configs = ["//:krnl"]
   ldflags = ["-melf_i386",  "-T", "link.ld"]
   include_dirs = ["include", "../lib/include"]
-  deps += ["//lib/libk:libk", ":linkscript"]
+  deps += ["//lib/libk:libk", ":linkscript", "//lib/liballoc:liballoc"]
 }
 
   

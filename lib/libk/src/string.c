@@ -1,5 +1,5 @@
 #include <memory.h>
-#include <mm/alloc.h>
+#include <mm/pmm.h>
 #include <string.h>
 
 size_t strlen(const char *str) {

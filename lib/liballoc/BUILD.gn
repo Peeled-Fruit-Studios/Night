@@ -1,0 +1,10 @@
+import("//build/imports.gni")
+
+static_library("liballoc") {
+  sources = [
+    "src/liballoc.c",
+    "src/hooks.c",
+  ]
+  configs = ["//:lib"]
+  include_dirs = ["../include/liballoc", "//kernel/include", "../include"]
+}

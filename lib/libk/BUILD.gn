@@ -6,5 +6,5 @@ static_library("libk") {
     "src/printf.c",
   ]
   configs = ["//:lib"]
-  include_dirs = ["../include/libk", "//kernel/include"]
+  include_dirs = ["../include/libk", "//kernel/include", "../include"]
 }

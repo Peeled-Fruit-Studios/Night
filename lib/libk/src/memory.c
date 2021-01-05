@@ -39,3 +39,11 @@ u8 inb(u16 _port) {
 void outb(u16 _port, u8 _data) {
   __asm__ __volatile__("outb %1, %0" : : "dN"(_port), "a"(_data));
 }
+
+u32 divide_up(u32 n, u32 d) {
+  if (n % d == 0) {
+    return n / d;
+  }
+
+  return 1 + n / d;
+}
