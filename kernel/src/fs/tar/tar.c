@@ -4,35 +4,45 @@ tar_h* files[MAX_RAMDISK_FILES];
 fs_node* tar_root;
 extern fs_node* fs_find(char* pth, fs_node* nd);
 
-static u32 getsize(const char *in) {
-  u32 size = 0;
-  u32 j;
-  u32 count = 1;
- 
-  for (j = 11; j > 0; j--, count *= 8)
-    size += ((in[j - 1] - '0') * count);
- 
-  return size;
+static size_t oct2bin(unsigned char *str, int size) {
+    size_t n = 0;
+    unsigned char *c = str;
+    while (size-- > 0) {
+        n *= 8;
+        n += *c - '0';
+        c++;
+    }
+    return n;
+}
+
+void* get_addr_ofsec(void* section) {
+  u32 addr = (u32)section;
+  addr += 512;
+  return (void*)addr;
 }
 
 size_t tar_read(size_t length, u8* buffer, fs_node* nd) {
+  puts("I was Called!\n");
   int sectr = *((int*)nd->contents);
-  u8* addr = ((u8*)(files[sectr]) + 512);
+  u8* addr = (u8*)get_addr_ofsec(files[sectr]);
   memcpy(buffer, addr, length);
   return length;
 }
+
 size_t tar_write(size_t length, u8* buffer, fs_node* nd) {
   return 0;
 }
 
 
 static void mkfile(char* name, u32 size, int sec) {
+  // printf("First Char %c\n", *((u8*)get_addr_ofsec(files[sec])));
   int* sect = kmalloc(sizeof(int));
   *sect = sec;
   fs_node* to_add = make_file(name, 0, (size_t)size, (void*)sect, NULL);
-  to_add->open = to_add->close = 0;
-  to_add->read = tar_read;
-  to_add->write = tar_write;
+  to_add->open = NULL;
+  to_add->close = NULL;
+  to_add->read = &tar_read;
+  to_add->write = &tar_write;
   add_dir(tar_root, to_add);
 }
 
@@ -45,7 +55,7 @@ static u32 parse(u32 address) {
     if (header->name[0] == '\0')
       break;
  
-    u32 size = getsize(header->size);
+    size_t size = oct2bin(header->size, 11);
  
     files[i] = header;
 
@@ -64,14 +74,12 @@ static u32 parse(u32 address) {
 
 static void init_tar_root() {
   tar_root = make_file("S:", 0, 0, NULL, NULL);
-  tar_root->open = tar_root->close = tar_root->read = 0;
-  tar_root->write = 0;
+  tar_root->open = tar_root->close = tar_root->read = NULL;
+  tar_root->write = NULL;
 }
 
-#ifdef USE_INITRD
 fs_node* init_tarfs(void* loc) {
   init_tar_root();
   parse((u32)loc);
   return tar_root;
 }
-#endif

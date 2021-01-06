@@ -50,15 +50,17 @@ void init_pmm(multiboot* boot) {
   used_blocks = max_blocks;
   memset(bitmap, 0xFF, max_blocks / 8);  
 
-  
   size_t available = 0;
   size_t unavailable = 0;
 
-  mmap_t* mmap = (mmap_t*)PHYS_TO_VIRT(boot->mmap_addr);
-
+  mmap_t* mmap = (mmap_t*)boot->mmap_addr;
+/*
   while ((addr_t)mmap <
          (PHYS_TO_VIRT((u32)boot->mmap_addr) + (u32)boot->mmap_length)) {
-    if (!mmap->length) { continue; }
+    if (!mmap->length) { 
+      puts("Continue was called!\n");
+      continue;
+    }
 
     if (mmap->type == 1) {
       pmm_init_region((addr_t)mmap->addr, mmap->length);
@@ -73,13 +75,8 @@ void init_pmm(multiboot* boot) {
 
   mem_size = available;
 
-  
+*/
   pmm_deinit_region(0, kernel_end + max_blocks / 8);
-
-  printf("memory stats: available: %d MiB", available >> 20);
-  printf("unavailable: %d KiB", unavailable >> 10);
-  printf("taken by modules: %d MiB",
-         (kernel_end - (addr_t)&KERNEL_END_PHYS) >> 20);
 }
 
 

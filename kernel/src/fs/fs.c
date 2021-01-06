@@ -5,7 +5,7 @@
 
 fs_node* root;
 
-int fs_read(fs_node* nd, size_t len, u8* buf) {
+size_t fs_read(fs_node* nd, size_t len, u8* buf) {
   if(IS_DIRECTORY(nd) | !nd->read) {
     return 0;
   } else {
@@ -13,7 +13,7 @@ int fs_read(fs_node* nd, size_t len, u8* buf) {
   }
 }
 
-int fs_write(fs_node* nd, size_t len, u8* buf) {
+size_t fs_write(fs_node* nd, size_t len, u8* buf) {
   if(IS_DIRECTORY(nd) | IS_READONLY(nd) | !nd->read) {
     return 0;
   } else {

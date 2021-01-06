@@ -7,33 +7,30 @@
 #include <fs/fs.h>
 
 extern fs_node* root;
+extern size_t tar_read(size_t re, u8* bf, fs_node* kg);
 
-/*
-char term_buf[100];
 
 void terminal() {
-  puts("Night Kernel (0.5.3) (Official Build) (x86_32)\n");
+  printf("Night Kernel (%s) (%s) (x86_32)\n", KERNEL_VER, BUILD_ID);
   puts("Copyright (c) 2020 Peeled Fruit Studios. All Rights Reserved.\n");
   puts("\n$ ");
   tab_stop();
 }
-*/
 
-void fs_test() {
-  puts("Opening file S:/kernel.conf\n");
-  fs_node* fil = get_file("S:/kernel.conf");
-  puts(fil->name);
-  putch('\n');
-  char* buf = kmalloc(fil->sz);
-  fs_read(fil, fil->sz, buf);
-  puts(buf);
+
+static void load_mods(multiboot* mboot) {
+  // There is only one mod as of now.
+
+  mod_t* tmod = mboot->mods_addr;
+  printf("Loading module %s with sz of %d\n", tmod->string, tmod->mod_end - tmod->mod_start);
+  fs_mount(init_tarfs((void*)tmod->mod_start));
 }
 
 
 void kmain(multiboot* mb) {
   set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
   init_video();
-  puts("Night Kernel v0.5.3\n");
+  printf("Night Kernel %s\n", KERNEL_VER);
   puts("Setting up Global Descriptor Tables...\n");
   gdt_install();
   puts("Setting up Interrupts & Drivers...\n");
@@ -49,23 +46,14 @@ void kmain(multiboot* mb) {
   init_pmm(mb);
   puts("Initializing Filesystem\n");
   init_fs();
-#ifdef USE_INITRD
-  u32 loc = *((u32*)mb->mods_addr);
-  u32 end = *((u32*)mb->mods_addr + 4);
-  u32 sz = end - loc;
-  printf("Mod at addr 0x%x with size of %d\n", loc, sz);
-  fs_mount(init_tarfs((void*)loc));
-#endif
+  puts("Loading Modules...\n");
+  load_mods(mb);
+
+  // Initialization is now complete, interupts can be enabled.
   __asm__ __volatile__("sti");
-  lock_vga();
-  sleep(4);
-  set_color(VGA_COLOR_WHITE, VGA_COLOR_BLACK);
+  sleep(2);
   cls();
-  unlock_vga();
-  fs_test();
-  /*
   terminal();
-  */
   for (;;)
     ;
 }

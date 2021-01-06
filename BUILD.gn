@@ -14,15 +14,11 @@ config("krnl") {
   if(is_debug) {
     cflags += ["-g"]
   }
-  if(use_initrd) {
-    defines = ["USE_INITRD"]
-    exec_script("//extra/mkintrid.py", ["//extra/kernel.conf"])
-  }
+  defines = ["KERNEL_VER=\"$kernel_version\"", "BUILD_ID=\"$build_id\""]
+  exec_script("//extra/mkintrid.py", ["//extra/kernel.conf"])
 }
 
 group("all") {
   deps = ["//kernel:kernel"]
-  if(use_initrd) {
-    deps += ["//kernel:initrd"]
-  }
+  deps += ["//kernel:initrd"]
 }
